@@ -1,5 +1,9 @@
 # StreamOracle
 
+> **Live Demo**: https://frontend-production-bdacc.up.railway.app
+>
+> **API**: https://backend-production-44cf.up.railway.app/api/v1/health
+
 **Multi-platform viewership analysis oracle for Twitch, YouTube, and Kick.**
 
 StreamOracle is an open-source tool that aggregates statistical signals to score streamers on the likelihood of artificial viewership. It collects data from multiple platforms, runs 7 independent detection signals, and produces a transparent suspicion score with full methodology disclosure.
