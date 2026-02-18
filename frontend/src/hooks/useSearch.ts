@@ -26,7 +26,7 @@ export function useSearch(): UseSearchReturn {
     const timeout = setTimeout(async () => {
       try {
         const data = await searchChannels(query.trim());
-        setResults(data.channels);
+        setResults(data.results);
       } catch {
         setResults([]);
       } finally {

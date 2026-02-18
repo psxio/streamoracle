@@ -37,7 +37,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export async function healthCheck(): Promise<HealthCheck> {
-  return request<HealthCheck>('/health');
+  return request<HealthCheck>('/api/v1/health');
 }
 
 export async function searchChannels(
@@ -46,14 +46,14 @@ export async function searchChannels(
 ): Promise<SearchResult> {
   const params = new URLSearchParams({ q: query });
   if (platform) params.set('platform', platform);
-  return request<SearchResult>(`/api/channels/search?${params}`);
+  return request<SearchResult>(`/api/v1/search?${params}`);
 }
 
 export async function getChannel(
   platform: string,
   username: string
 ): Promise<ChannelDetail> {
-  return request<ChannelDetail>(`/api/channels/${platform}/${username}`);
+  return request<ChannelDetail>(`/api/v1/channels/${platform}/${username}`);
 }
 
 export async function getSnapshots(
@@ -63,7 +63,7 @@ export async function getSnapshots(
 ): Promise<Snapshot[]> {
   const params = hours ? `?hours=${hours}` : '';
   return request<Snapshot[]>(
-    `/api/channels/${platform}/${username}/snapshots${params}`
+    `/api/v1/channels/${platform}/${username}/snapshots${params}`
   );
 }
 
@@ -71,7 +71,7 @@ export async function trackChannel(
   platform: string,
   username: string
 ): Promise<void> {
-  await request(`/api/channels/${platform}/${username}/track`, {
+  await request(`/api/v1/channels/${platform}/${username}/track`, {
     method: 'POST',
   });
 }
@@ -81,7 +81,7 @@ export async function getAnalysis(
   username: string
 ): Promise<AnalysisResult> {
   return request<AnalysisResult>(
-    `/api/channels/${platform}/${username}/analysis`
+    `/api/v1/analysis/${platform}/${username}/latest`
   );
 }
 
@@ -96,10 +96,10 @@ export async function getLeaderboard(
   if (limit) params.set('limit', limit.toString());
   const qs = params.toString();
   return request<LeaderboardEntry[]>(
-    `/api/leaderboard${qs ? `?${qs}` : ''}`
+    `/api/v1/leaderboard${qs ? `?${qs}` : ''}`
   );
 }
 
 export async function getMethodology(): Promise<MethodologyResponse> {
-  return request<MethodologyResponse>('/api/methodology');
+  return request<MethodologyResponse>('/api/v1/methodology');
 }

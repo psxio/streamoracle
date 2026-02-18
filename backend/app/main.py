@@ -11,6 +11,7 @@ from app.api.search import router as search_router
 from app.api.channels import router as channels_router
 from app.api.analysis import router as analysis_router
 from app.api.leaderboard import router as leaderboard_router
+from app.api.methodology import router as methodology_router
 from app.scheduler.jobs import start_scheduler, stop_scheduler
 
 logging.basicConfig(level=logging.INFO)
@@ -49,3 +50,4 @@ app.include_router(search_router)
 app.include_router(channels_router)
 app.include_router(analysis_router)
 app.include_router(leaderboard_router)
+app.include_router(methodology_router)

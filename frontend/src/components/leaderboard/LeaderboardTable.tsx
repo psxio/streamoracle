@@ -74,10 +74,10 @@ export default function LeaderboardTable({ entries, loading }: LeaderboardTableP
           </thead>
           <tbody>
             {entries.map((entry) => (
-              <tr key={`${entry.channel.platform}-${entry.channel.username}`} className="group">
+              <tr key={`${entry.platform}-${entry.username}`} className="group">
                 <td className="p-0" colSpan={6}>
                   <Link
-                    href={`/channel/${entry.channel.platform}/${entry.channel.username}`}
+                    href={`/channel/${entry.platform}/${entry.username}`}
                     className="flex items-center border-b border-gray-800/50 transition-colors hover:bg-gray-800/30"
                   >
                     <span className="w-16 px-4 py-3 text-sm font-medium text-gray-400">
@@ -85,29 +85,29 @@ export default function LeaderboardTable({ entries, loading }: LeaderboardTableP
                     </span>
                     <span className="flex flex-1 items-center gap-3 px-4 py-3">
                       <span className="h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-gray-700">
-                        {entry.channel.avatar_url ? (
+                        {entry.avatar_url ? (
                           <img
-                            src={entry.channel.avatar_url}
-                            alt={entry.channel.display_name}
+                            src={entry.avatar_url}
+                            alt={entry.display_name}
                             className="h-full w-full object-cover"
                           />
                         ) : (
                           <span className="flex h-full w-full items-center justify-center text-xs font-bold text-gray-400">
-                            {entry.channel.display_name.charAt(0).toUpperCase()}
+                            {entry.display_name.charAt(0).toUpperCase()}
                           </span>
                         )}
                       </span>
                       <span className="text-sm font-medium text-gray-200">
-                        {entry.channel.display_name}
+                        {entry.display_name}
                       </span>
                     </span>
                     <span className="w-24 px-4 py-3">
                       <span
                         className={`rounded-full px-2 py-0.5 text-xs font-medium text-white ${
-                          platformColors[entry.channel.platform] || 'bg-gray-600'
+                          platformColors[entry.platform] || 'bg-gray-600'
                         }`}
                       >
-                        {entry.channel.platform}
+                        {entry.platform}
                       </span>
                     </span>
                     <span
@@ -127,7 +127,7 @@ export default function LeaderboardTable({ entries, loading }: LeaderboardTableP
                       </span>
                     </span>
                     <span className="hidden w-40 truncate px-4 py-3 text-xs text-gray-500 md:block">
-                      {entry.channel.category || '-'}
+                      {entry.category || '-'}
                     </span>
                   </Link>
                 </td>

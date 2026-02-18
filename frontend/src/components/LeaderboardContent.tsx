@@ -16,7 +16,7 @@ export default function LeaderboardContent() {
   const categories = Array.from(
     new Set(
       entries
-        .map((e) => e.channel.category)
+        .map((e) => e.category)
         .filter((c): c is string => c !== null && c !== undefined)
     )
   ).sort();

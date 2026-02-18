@@ -42,14 +42,18 @@ export interface ChannelDetail extends Channel {
 
 export interface LeaderboardEntry {
   rank: number;
-  channel: Channel;
+  channel_id: number;
+  platform: string;
+  username: string;
+  display_name: string;
+  avatar_url: string | null;
   overall_score: number;
   label: string;
   analyzed_at: string;
 }
 
 export interface SearchResult {
-  channels: Channel[];
+  results: Channel[];
   total: number;
 }
 
