@@ -1,0 +1,9 @@
+{
+  "cvr": 0.25,
+  "step_function": 0.20,
+  "chat_entropy": 0.15,
+  "follower_ratio": 0.10,
+  "growth": 0.10,
+  "benford": 0.10,
+  "temporal": 0.10
+}
