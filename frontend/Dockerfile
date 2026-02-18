@@ -8,6 +8,7 @@ RUN npm ci || npm install
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+ARG CACHEBUST=1
 COPY frontend/ .
 
 ARG NEXT_PUBLIC_API_URL=https://backend-production-44cf.up.railway.app
