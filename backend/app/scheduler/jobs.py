@@ -10,6 +10,7 @@ from app.models.channel import Channel
 from app.models.snapshot import ViewerSnapshot
 from app.models.chat_metric import ChatMetric
 from app.analysis.engine import AnalysisEngine
+from app.twitter.poster import post_interesting_tweet
 
 logger = logging.getLogger(__name__)
 
@@ -185,11 +186,19 @@ def start_scheduler():
         id="analyze_all",
         replace_existing=True,
     )
+    scheduler.add_job(
+        post_interesting_tweet,
+        "interval",
+        hours=settings.TWEET_INTERVAL_HOURS,
+        id="tweet_stats",
+        replace_existing=True,
+    )
     scheduler.start()
     logger.info(
-        "Scheduler started: collect every %d min, analyze every %d min",
+        "Scheduler started: collect every %d min, analyze every %d min, tweet every %d hrs",
         settings.COLLECT_INTERVAL_MINUTES,
         settings.ANALYZE_INTERVAL_MINUTES,
+        settings.TWEET_INTERVAL_HOURS,
     )
 
 

@@ -14,6 +14,15 @@ class Settings(BaseSettings):
     COLLECT_INTERVAL_MINUTES: int = 5
     ANALYZE_INTERVAL_MINUTES: int = 30
 
+    # Twitter/X API credentials (leave empty to disable tweeting)
+    TWITTER_API_KEY: str = ""
+    TWITTER_API_SECRET: str = ""
+    TWITTER_ACCESS_TOKEN: str = ""
+    TWITTER_ACCESS_TOKEN_SECRET: str = ""
+    TWITTER_BEARER_TOKEN: str = ""
+    TWEET_INTERVAL_HOURS: int = 4
+    SITE_URL: str = "https://frontend-production-bdacc.up.railway.app"
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
     @property

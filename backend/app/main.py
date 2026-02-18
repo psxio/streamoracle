@@ -12,7 +12,9 @@ from app.api.channels import router as channels_router
 from app.api.analysis import router as analysis_router
 from app.api.leaderboard import router as leaderboard_router
 from app.api.methodology import router as methodology_router
+from app.api.tweets import router as tweets_router
 from app.scheduler.jobs import start_scheduler, stop_scheduler
+import app.models.tweet_log  # noqa: F401 — ensure table creation
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -51,3 +53,4 @@ app.include_router(channels_router)
 app.include_router(analysis_router)
 app.include_router(leaderboard_router)
 app.include_router(methodology_router)
+app.include_router(tweets_router)
