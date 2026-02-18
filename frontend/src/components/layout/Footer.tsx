@@ -2,40 +2,72 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-800 bg-gray-950">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
-          <div className="text-center md:text-left">
-            <p className="text-sm font-semibold text-gray-300">StreamOracle</p>
-            <p className="mt-1 text-xs text-gray-500">
+    <footer className="relative border-t border-white/[0.06] bg-[#0a0e1a]">
+      <div className="absolute inset-0 grid-bg opacity-50" />
+      <div className="relative mx-auto max-w-7xl px-4 py-12">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
+              </span>
+              <span className="text-lg font-bold tracking-tight text-gradient" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                StreamOracle
+              </span>
+            </div>
+            <p className="mt-3 text-sm text-gray-500">
+              Multi-platform viewership forensics.
+              <br />
               Score, don&apos;t accuse.
             </p>
           </div>
 
-          <div className="flex items-center gap-6 text-xs text-gray-500">
-            <Link href="/methodology" className="transition-colors hover:text-gray-300">
+          {/* Navigation */}
+          <div className="flex flex-col items-start gap-2 md:items-center">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-600">
+              Navigate
+            </p>
+            <Link href="/methodology" className="text-sm text-gray-500 transition-colors hover:text-cyan-400">
               Methodology
             </Link>
-            <Link href="/about" className="transition-colors hover:text-gray-300">
+            <Link href="/leaderboard" className="text-sm text-gray-500 transition-colors hover:text-cyan-400">
+              Leaderboard
+            </Link>
+            <Link href="/about" className="text-sm text-gray-500 transition-colors hover:text-cyan-400">
               About
             </Link>
+          </div>
+
+          {/* Credits */}
+          <div className="flex flex-col items-start gap-2 md:items-end">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-600">
+              Connect
+            </p>
+            <a
+              href="https://x.com/duhhhdev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-500 transition-colors hover:text-cyan-400"
+            >
+              @duhhhdev
+            </a>
             <a
               href="https://github.com/psxio/streamoracle"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-gray-300"
+              className="text-sm text-gray-500 transition-colors hover:text-cyan-400"
             >
               GitHub
             </a>
           </div>
+        </div>
 
-          <div className="text-center text-xs text-gray-600 md:text-right">
-            <p>
-              Built by{' '}
-              <a href="https://x.com/duhhhdev" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300">@duhhhdev</a>
-            </p>
-            <p className="mt-1">Next.js, FastAPI &amp; SQLite</p>
-          </div>
+        {/* Bottom divider */}
+        <div className="mt-10 border-t border-white/[0.06] pt-6 text-center">
+          <p className="text-xs text-gray-600">
+            Built with data, not opinions.
+          </p>
         </div>
       </div>
     </footer>

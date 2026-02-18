@@ -25,7 +25,7 @@ export default function SearchBar() {
     <div ref={wrapperRef} className="relative w-full max-w-2xl">
       <div className="relative">
         <svg
-          className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+          className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-cyan-500"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -42,12 +42,12 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
-          placeholder="Search for a streamer..."
-          className="w-full rounded-xl border border-gray-700 bg-gray-900 py-4 pl-12 pr-4 text-lg text-gray-100 placeholder-gray-500 outline-none transition-all focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20"
+          placeholder="Search any streamer across Twitch, YouTube, and Kick..."
+          className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.03] py-4 pl-14 pr-14 text-lg text-gray-100 placeholder-gray-500 outline-none backdrop-blur-sm transition-all focus:border-cyan-500/50 focus:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
         />
         {loading && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-600 border-t-purple-500" />
+          <div className="absolute right-5 top-1/2 -translate-y-1/2">
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/[0.1] border-t-cyan-500" />
           </div>
         )}
       </div>

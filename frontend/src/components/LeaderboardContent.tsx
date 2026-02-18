@@ -4,22 +4,12 @@ import { useState, useEffect } from 'react';
 import { getLeaderboard } from '@/lib/api';
 import type { LeaderboardEntry } from '@/lib/types';
 import PlatformFilter from '@/components/search/PlatformFilter';
-import CategoryFilter from '@/components/leaderboard/CategoryFilter';
 import LeaderboardTable from '@/components/leaderboard/LeaderboardTable';
 
 export default function LeaderboardContent() {
   const [platform, setPlatform] = useState<string | null>(null);
-  const [category, setCategory] = useState<string | null>(null);
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const categories = Array.from(
-    new Set(
-      entries
-        .map((e) => e.category)
-        .filter((c): c is string => c !== null && c !== undefined)
-    )
-  ).sort();
 
   useEffect(() => {
     let cancelled = false;
@@ -29,7 +19,7 @@ export default function LeaderboardContent() {
       try {
         const data = await getLeaderboard(
           platform || undefined,
-          category || undefined,
+          undefined,
           100
         );
         if (!cancelled) setEntries(data);
@@ -44,27 +34,44 @@ export default function LeaderboardContent() {
     return () => {
       cancelled = true;
     };
-  }, [platform, category]);
+  }, [platform]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-100">Suspicion Leaderboard</h1>
+      {/* Header */}
+      <div className="mb-8 animate-fade-in-up">
+        <h1 className="font-outfit text-3xl font-bold">
+          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">
+            Suspicion Leaderboard
+          </span>
+        </h1>
         <p className="mt-2 text-sm text-gray-500">
           Channels ranked by suspicion score. Higher scores indicate more anomalous patterns.
         </p>
       </div>
 
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <PlatformFilter selected={platform} onChange={setPlatform} />
-        <CategoryFilter
-          categories={categories}
-          selected={category}
-          onChange={setCategory}
-        />
+      {/* Stats bar */}
+      <div className="mb-6 flex items-center gap-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+        <div className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2 backdrop-blur-sm">
+          <span className="text-xs text-gray-500">Total tracked:</span>
+          <span
+            className="text-sm font-bold text-cyan-400"
+            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          >
+            {loading ? '...' : entries.length}
+          </span>
+        </div>
       </div>
 
-      <LeaderboardTable entries={entries} loading={loading} />
+      {/* Filter */}
+      <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        <PlatformFilter selected={platform} onChange={setPlatform} />
+      </div>
+
+      {/* Table */}
+      <div className="animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+        <LeaderboardTable entries={entries} loading={loading} />
+      </div>
     </div>
   );
 }

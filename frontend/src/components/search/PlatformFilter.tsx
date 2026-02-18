@@ -6,9 +6,21 @@ interface PlatformFilterProps {
 }
 
 const platforms = [
-  { id: 'twitch', label: 'Twitch', color: 'bg-purple-600 hover:bg-purple-700', activeRing: 'ring-purple-500' },
-  { id: 'youtube', label: 'YouTube', color: 'bg-red-600 hover:bg-red-700', activeRing: 'ring-red-500' },
-  { id: 'kick', label: 'Kick', color: 'bg-green-600 hover:bg-green-700', activeRing: 'ring-green-500' },
+  {
+    id: 'twitch',
+    label: 'Twitch',
+    activeClass: 'bg-purple-500/20 text-purple-400 border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.15)]',
+  },
+  {
+    id: 'youtube',
+    label: 'YouTube',
+    activeClass: 'bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.15)]',
+  },
+  {
+    id: 'kick',
+    label: 'Kick',
+    activeClass: 'bg-green-500/20 text-green-400 border-green-500/40 shadow-[0_0_15px_rgba(34,197,94,0.15)]',
+  },
 ];
 
 export default function PlatformFilter({ selected, onChange }: PlatformFilterProps) {
@@ -16,10 +28,10 @@ export default function PlatformFilter({ selected, onChange }: PlatformFilterPro
     <div className="flex items-center gap-2">
       <button
         onClick={() => onChange(null)}
-        className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+        className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
           selected === null
-            ? 'bg-gray-700 text-white ring-2 ring-gray-500'
-            : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+            ? 'border-cyan-500/40 bg-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+            : 'border-white/[0.06] bg-white/[0.02] text-gray-400 hover:border-white/[0.1] hover:bg-white/[0.04]'
         }`}
       >
         All
@@ -28,8 +40,10 @@ export default function PlatformFilter({ selected, onChange }: PlatformFilterPro
         <button
           key={p.id}
           onClick={() => onChange(selected === p.id ? null : p.id)}
-          className={`rounded-lg px-4 py-2 text-sm font-medium text-white transition-all ${p.color} ${
-            selected === p.id ? `ring-2 ${p.activeRing}` : 'opacity-70 hover:opacity-100'
+          className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+            selected === p.id
+              ? p.activeClass
+              : 'border-white/[0.06] bg-white/[0.02] text-gray-400 hover:border-white/[0.1] hover:bg-white/[0.04]'
           }`}
         >
           {p.label}

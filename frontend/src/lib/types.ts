@@ -69,6 +69,6 @@ export interface MethodologyResponse {
     weight: number;
     description: string;
   }[];
-  formula: string;
-  labels: Record<string, string>;
+  description: string;
+  score_labels: Record<string, string>;
 }

@@ -3,8 +3,8 @@
 import { useState, useMemo } from 'react';
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -52,25 +52,28 @@ export default function ViewerChart({ snapshots }: ViewerChartProps) {
 
   if (data.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center rounded-xl border border-gray-800 bg-gray-900/30">
+      <div className="glass-card flex h-64 items-center justify-center">
         <p className="text-sm text-gray-500">No snapshot data available for this time range.</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900/30 p-4">
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-300">Viewer & Chatter Count</h3>
-        <div className="flex gap-1">
+    <div className="glass-card relative overflow-hidden p-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+      <div className="mb-5 flex items-center justify-between">
+        <h3 className="text-sm font-medium text-gray-300" style={{ fontFamily: 'Outfit, sans-serif' }}>
+          Viewer &amp; Chatter Count
+        </h3>
+        <div className="flex gap-1.5">
           {timeRanges.map((r) => (
             <button
               key={r.hours}
               onClick={() => setRange(r.hours)}
-              className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-200 ${
                 range === r.hours
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:text-gray-200'
+                  ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 shadow-[0_0_10px_rgba(6,182,212,0.15)]'
+                  : 'border border-white/[0.06] bg-white/[0.02] text-gray-400 hover:border-white/[0.1] hover:text-gray-300'
               }`}
             >
               {r.label}
@@ -79,26 +82,39 @@ export default function ViewerChart({ snapshots }: ViewerChartProps) {
         </div>
       </div>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="viewerGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="#06b6d4" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="chatterGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
           <XAxis
             dataKey="time"
-            tick={{ fill: '#9ca3af', fontSize: 12 }}
-            tickLine={{ stroke: '#4b5563' }}
-            axisLine={{ stroke: '#4b5563' }}
+            tick={{ fill: '#6b7280', fontSize: 11 }}
+            tickLine={false}
+            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
           />
           <YAxis
-            tick={{ fill: '#9ca3af', fontSize: 12 }}
-            tickLine={{ stroke: '#4b5563' }}
-            axisLine={{ stroke: '#4b5563' }}
+            tick={{ fill: '#6b7280', fontSize: 11 }}
+            tickLine={false}
+            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
             tickFormatter={formatNumber}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#1f2937',
-              border: '1px solid #374151',
-              borderRadius: '8px',
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '12px',
               color: '#f3f4f6',
+              backdropFilter: 'blur(12px)',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: '12px',
             }}
             formatter={(value: number, name: string) => [
               formatNumber(value),
@@ -106,28 +122,30 @@ export default function ViewerChart({ snapshots }: ViewerChartProps) {
             ]}
           />
           <Legend
-            wrapperStyle={{ color: '#9ca3af' }}
+            wrapperStyle={{ color: '#9ca3af', fontSize: '12px' }}
             formatter={(value: string) =>
               value === 'viewers' ? 'Viewer Count' : 'Chatter Count'
             }
           />
-          <Line
+          <Area
             type="monotone"
             dataKey="viewers"
-            stroke="#3b82f6"
+            stroke="#06b6d4"
             strokeWidth={2}
+            fill="url(#viewerGradient)"
             dot={false}
-            activeDot={{ r: 4 }}
+            activeDot={{ r: 4, stroke: '#06b6d4', strokeWidth: 2, fill: '#0a0e1a' }}
           />
-          <Line
+          <Area
             type="monotone"
             dataKey="chatters"
-            stroke="#14b8a6"
+            stroke="#8b5cf6"
             strokeWidth={2}
+            fill="url(#chatterGradient)"
             dot={false}
-            activeDot={{ r: 4 }}
+            activeDot={{ r: 4, stroke: '#8b5cf6', strokeWidth: 2, fill: '#0a0e1a' }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

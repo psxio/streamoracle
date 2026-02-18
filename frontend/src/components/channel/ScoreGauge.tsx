@@ -23,47 +23,75 @@ function getScoreColorClass(score: number): string {
 }
 
 export default function ScoreGauge({ score, label, confidence }: ScoreGaugeProps) {
-  const radius = 80;
+  const radius = 100;
   const circumference = Math.PI * radius; // semicircle
   const progress = (score / 100) * circumference;
   const color = getScoreColor(score);
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-4">
       <div className="relative">
-        <svg width="200" height="120" viewBox="0 0 200 120">
+        {/* Radial glow behind gauge */}
+        <div
+          className="absolute inset-0 rounded-full blur-3xl opacity-20"
+          style={{ background: `radial-gradient(circle, ${color} 0%, transparent 70%)` }}
+        />
+        <svg width="250" height="150" viewBox="0 0 250 150">
+          <defs>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
           {/* Background arc */}
           <path
-            d="M 10 110 A 80 80 0 0 1 190 110"
+            d="M 25 135 A 100 100 0 0 1 225 135"
             fill="none"
-            stroke="#374151"
-            strokeWidth="12"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth="14"
             strokeLinecap="round"
           />
-          {/* Score arc */}
+          {/* Score arc with glow */}
           <path
-            d="M 10 110 A 80 80 0 0 1 190 110"
+            d="M 25 135 A 100 100 0 0 1 225 135"
             fill="none"
             stroke={color}
-            strokeWidth="12"
+            strokeWidth="14"
             strokeLinecap="round"
             strokeDasharray={`${progress} ${circumference}`}
-            className="transition-all duration-1000 ease-out"
+            filter="url(#glow)"
+            className="animate-[gaugeStroke_1.2s_ease-out_forwards]"
+            style={{
+              strokeDashoffset: 0,
+            }}
           />
         </svg>
         {/* Score number */}
-        <div className="absolute inset-0 flex flex-col items-center justify-end pb-2">
-          <span className={`text-4xl font-bold ${getScoreColorClass(score)}`}>
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-4">
+          <span
+            className={`text-5xl font-bold ${getScoreColorClass(score)}`}
+            style={{ fontFamily: 'JetBrains Mono, monospace' }}
+          >
             {Math.round(score)}
           </span>
         </div>
       </div>
-      <div className="text-center">
-        <p className={`text-lg font-semibold ${getScoreColorClass(score)}`}>
+      <div className="flex flex-col items-center gap-1.5">
+        <p
+          className={`text-lg font-semibold ${getScoreColorClass(score)}`}
+          style={{ fontFamily: 'Outfit, sans-serif' }}
+        >
           {label}
         </p>
-        <p className="mt-1 text-xs text-gray-500">
-          Confidence: {Math.round(confidence * 100)}%
+        <div className="h-px w-16 bg-white/[0.06]" />
+        <p className="text-xs text-gray-500">
+          Confidence:{' '}
+          <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            {Math.round(confidence * 100)}%
+          </span>
         </p>
       </div>
     </div>
