@@ -1,0 +1,9 @@
+venv/
+.venv/
+myenv/
+__pycache__/
+*.pyc
+*.db
+*.db-journal
+.env
+data/*.db
